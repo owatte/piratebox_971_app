@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="org.gwadalug.piratebox971" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>PirateBox971</name>
+    <description>
+        A app to show on a map pirate boxes currently on the air on Guadeloupe an to add your own box on the map.
+    </description>
+    <author email="oliman@avaland.org" href="http://www.gwadalug.org">
+        Fwix from GwadaLUG
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>

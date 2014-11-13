@@ -1,0 +1,703 @@
+<!--
+    Copyright (C) 2014 Olivier WATTE, Andy ZEBUS
+
+    This file is part of PirateBox971.
+
+    PirateBox971 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    PirateBox971 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with PirateBox971.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html lang="fr">
+     <head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>PirateBox971</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link rel="stylesheet" href="lib/leaflet/leaflet.css">
+
+	<script src="lib/leaflet/leaflet.js"></script>
+        
+        <meta name="application-name" content="Pirate Box 971" />
+        <meta name="author" content="Fwix" />
+        <meta name="generator" content="Hecho a mano" />
+        <meta name="description" content="Pirate Box 971, the mobile app." />
+        <meta name="keywords" content="" />
+        <link rel="stylesheet" href='lib/css/normalize.css' />        <link rel="stylesheet" href='lib/bootstrap/css/bootstrap.min.css' />
+        <link rel="stylesheet" href='lib/bootstrap/css/bootstrap-theme.min.css' />
+        <link rel="stylesheet" href='lib/font-awesome/css/font-awesome.min.css' />
+        <link rel="stylesheet" href='lib/css/ipeos.css' />
+        <link rel="stylesheet" href='lib/css/main.css' />
+        <link rel="icon" type="image/x-icon" href='/static/img/favicon.ico' />
+        <script  type="text/javascript" src='lib/jquery/jquery.min.js'></script>
+        <script type="text/javascript" src="lib/webL10n/l10n.js"></script>
+        <link rel="prefetch" type="application/l10n" href="locales/i18n.ini" />
+        <script type="text/javascript">var l10n = document.webL10n ; var _ = document.webL10n.get;</script>
+
+	<style>
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		html, body, #map, #main {
+			height: 100%;
+        }
+        #main{padding-top: 50px;}
+	</style>
+    
+
+    </head>
+
+    <body class="">
+ 
+        
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#base-navbar-collapse">
+                        <span class="sr-only">PirateBox971</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">
+			    <img src="img/piratebox-logo-horizontal-white.png" style="height:20px;" />    
+		    </a>
+                </div>
+                <div id="base-navbar-collapse" class="collapse navbar-collapse">
+                    
+    
+
+
+<ul id="main-nav" class="nav navbar-nav navbar-right">
+    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-share-alt"></i> <span  data-l10n-id="menu_participer">Participer</span><b class="caret"></b></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuHelp">
+            <li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-target="#joinboxModal"><span data-l10n-id="menu_rejoindre_piratebox">Rejoindre une pirate box</span></a></li>
+            <li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-target="#makeboxModal"><span data-l10n-id="menu_fabriquer_piratebox">Fabriquer une pirate box</span></a></li>
+            <!--<li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-target="#buyboxModal"><span data-l10n-id="menu_acheter_piratebox">Acheter une pirate box</span></a></li>-->
+            <li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-target="#joinnetworkModal"><span data-l10n-id="menu_rejoindre_piratebox971">Rejoindre PirateBox971</span></a></li>
+        </ul> 
+    </li> 
+    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-info"></i> <span  data-l10n-id="menu_reperes">Repères</span><b class="caret"></b></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuHelp">
+		<!-- Button trigger modal -->
+            <li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-target="#piraterModal"><i class="fa fa-warning"></i> <span data-l10n-id="menu_pirater">Pirater</span></a></li>
+            <li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-target="#pirateboxModal">Pirate box</a></li>
+            <li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-target="#piratebox971Modal">PirateBox971</a></li>
+            <li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-target="#gwadalugModal">GwadaLUG</a></li>
+            <li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-target="#fwiiModal">FWII.fr</a></li>
+        </ul> 
+    </li> 
+    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-question"></i> <span  data-l10n-id="menu_apropos">À propos</span><b class="caret"></b></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenuHelp">
+		<!-- Button trigger modal -->
+            <li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-l10n-id="menu-privacy" data-target="#privacyModal">Politique de confidentialité</a></li>
+            <li role="presentation"><a role="menuitem" href="#" tabindex="-1" data-toggle="modal" data-l10n-id="menu-licences" data-target="#licencesModal">Licences</a></li>
+            <li role="presentation" class="divider"></li>
+	        <li role="presentation"><a href='#'>Fork me on GitHub<br><small>Pirate Box 971 v.0.1</small></a></li>
+	        <li role="presentation"><a href='https://twitter.com/piratebox971'>Follow me on Twitter<br><small>@piratebox971</small></a></li>
+        </ul> 
+    </li>     
+</ul>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div id="main">
+
+
+
+
+
+
+             <div id="map"></div>
+
+			<script type="text/javascript">
+			//<![CDATA[
+
+	        var root_url = 'http://piratebox971.gwadalug.org/';
+            var json_url = root_url + 'boxes/';
+            var addbox_url = root_url + 'boxes/add/';
+
+			var map = L.map('map');
+            </script>
+            <script src='lib/leaflet.easy-button/easy-button.js'></script>
+            <script>
+            function refresh(){
+                location.reload();
+            }
+            L.easyButton('fa-refresh', function (){location.reload()}, 'refresh');
+            //L.easyButton('fa-map-marker', function (){map.locate({setView: true});}, 'show me on map');
+            var monthes = new Array('janv.', 'fév.', 'mars', 'avr', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.');
+            var boxLatLngs = new Array();           
+            var boxes = new Array();  
+            $.ajaxSetup({
+                async: false
+            });
+            (function(){
+                var jqxhr = $.getJSON(json_url, function() {
+
+                    console.log( "get success" );
+                })
+                .done(function(data) { 
+                    $.each( data, function( i, item ) {
+                        //alert(item.fields.name);
+                        coord = [];
+                        coord.push(item.fields.lat);
+                        coord.push(item.fields.lon);
+                        var info = '<b>' + item.fields.name + '</b><br>';
+                        if(item.fields.msg != ""){
+                            info = info + item.fields.msg + '</br>';
+                        }
+                        var until = '<i>jusqu\'à ' 
+                              + item.fields.delete_time.substr(11, 1)
+                              + 'h'
+                              + item.fields.delete_time.substr(14, 2)
+                              + ' le '
+                              + item.fields.delete_time.substr(8, 2)
+                              + ' '
+                              + monthes[parseInt(item.fields.delete_time.substr(6,2))]
+                              + '</i>';
+                        
+                        info = info + until;
+                        boxes.push([coord, info]);
+                    });
+                    console.log( "parse success" );
+                })
+                .fail(function() {
+                    console.log( "error" );
+                })
+                .always(function() {
+                    console.log( "complete" );
+                });
+
+            })();
+            
+			var pirateboxIcon = L.icon({
+			    iconUrl: './img/piratebox-icon.png',
+			    shadowUrl: './img/piratebox-icon-shadow.png',
+
+			    iconSize:     [42, 34], // size of the icon
+			    shadowSize:   [55, 35], // size of the shadow
+			    iconAnchor:   [21, 33], // point of the icon which will correspond to marker's location
+			    shadowAnchor: [21, 33],  // the same for the shadow
+			    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+			});
+
+			for(var i= 0; i < boxes.length; i++)
+			{
+                var box = L.marker(boxes[i][0], {icon: pirateboxIcon})
+                    .addTo(map).bindPopup(boxes[i][1]),
+			    	    box_location = L.circle(boxes[i][0], 42,{color: 'red',
+								    	       fillColor: '#f03',
+								    	       fillOpacity: 0.5})
+					  .addTo(map);
+				boxLatLngs.push(boxes[i][0]);
+
+			}
+
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+				maxZoom: 18,
+				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+					'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>' +
+					' | <a href="#" data-toggle="modal" data-target="#osmModal">Améliorer cette carte</a> '
+			}).addTo(map);
+
+
+			function getNearestBox(user) {
+				/*
+				   return the shortest distance (in meters) to a box
+				*/
+	    		var distance = 10000000;
+
+				for(var i=0; i < boxes.length; i++)
+				{
+					var latlng = L.latLng(boxes[i][0]);
+					var tmp = latlng.distanceTo(user.latlng);
+					if (tmp < distance) distance = tmp;
+				}	
+				return distance
+			}
+
+            function hdistance(distance){
+            /* 
+               return distance (str) in human readable format (km and m)
+            */
+                var ret = '';
+                var km = Math.floor(distance / 1000);
+                var m = Math.floor(distance % 1000);
+                if (km > 0){
+                    ret = km + ' km et ';
+                }
+                ret = ret + m + ' m';
+
+                return ret;
+            
+            }
+
+			function onLocationFound(e) {
+				var radius = e.accuracy / 2;
+				//var dist = box.getLatLng().distanceTo(e.latlng);
+				var dist = getNearestBox(e);
+				
+				var you = L.marker(e.latlng).addTo(map).bindPopup("Vous êtes à " + hdistance(dist) + ' de la PirateBox la plus proche'),
+				    your_location = L.circle(e.latlng, radius).addTo(map);
+                var msg = '';
+				map.fitBounds(boxLatLngs);
+                if (boxes.length == 0) {
+                    msg = 'Il semble n\'y avoir aucune PirateBox allumée.';
+                } else if (boxes.length == 1) {
+                    msg = 'Il semble y avoir au moins 1 PirateBox allumée, ';
+                    if (dist < 43){
+                        msg = msg + 'tout près d\'ici. Surveillez les réseaux WiFi et connectez-vous.';
+                    } else if (dist < 1000) {
+                        msg = msg + 'près d\'ici, à ' + Math.floor(dist) + ' mètres';
+                    } else {
+                        msg = msg  + 'à ' + hdistance(dist) + ' d\'ici' ;
+                    }
+                } else {
+                    msg = 'Il semble y avoir au moins ' + boxes.length + ' PirateBox allumées. ';
+                    if (dist < 43){
+                        msg = msg + 'Vous êtes juste à côté d\'une PirateBox. Surveillez les réseaux WiFi et connectez-vous.';
+                    } else if (dist < 1000) {
+                        msg = msg + 'La plus proche est près d\'ici, à ' + Math.floor(dist) + ' mètres';
+                    } else {
+                        msg = msg  + 'La plus proche est à ' + hdistance(dist) + ' d\'ici' ;
+                    }
+                }
+                alert(msg);
+                boxLatLngs.push(e.latlng);
+                $('input[name=current_lat]').val(e.latlng['lat']);
+                $('input[name=current_lon]').val(e.latlng['lng']);
+                $('form[name=addbox]').attr('action', addbox_url); //(addbox_url);
+                $('input[name=addbox_button]').prop('disabled', false);
+                $('input[name=addbox_button]').removeAttr('disabled');
+
+
+				map.fitBounds(boxLatLngs);
+			}
+
+			function onLocationError(e) {
+				alert(e.message);
+                $('input[name=addbox_button]').attr('disabled', 'disabled');
+                $('input[name=addbox_button]').prop("disabled", true);
+			}
+			
+
+
+			if ("geolocation" in navigator) {
+				map.on('locationfound', onLocationFound);
+				map.on('locationerror', onLocationError);
+
+				map.fitBounds(boxLatLngs);
+				//map.setView(boxLatLngs[0], 17);
+				map.locate();
+
+			} else {
+			  /* geolocation IS NOT available */
+				alert('no geolocation, show PirateBox places only');
+			}
+		//]]>
+		</script>
+        </div>
+        
+        <div id="footer">
+            <div class="container">
+                
+            </div>
+        </div>
+
+
+        <script src='lib/bootstrap/js/bootstrap.min.js'></script>
+        <!--[if lt IE 9]>
+        <script src='lib/bootstrap/js/html5shiv.js'></script >
+        <script src='lib/bootstrap/js/respond.min.js'></script >
+        <![endif]-->
+        <script src='lib/bootstrap/js/main.js'></script>
+	<script src="cordova.js"></script>
+
+
+	<!-- OSM / Improve this map -->
+	<div class="modal fade" id="osmModal" tabindex="-1" role="dialog" aria-labelledby="osmModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="osmModalLabel"><i class="fa fa-pencil"></i> <span data-l10n-id="ameliorer_carte_titre">Améliorer la carte</span></h4>
+	      </div>
+	      <div class="modal-body">
+		      <p data-l10n-id="ameliorer_carte_p1">Les cartes et les données géographiques de l'application PirateBox971 proviennent de OpenStreetMap, projet collaboratif ayant pour but de créer une base de données géographiques libre du monde entier.</p>
+		      <p data-l10n-id="ameliorer_carte_p2">Si vous constatez une erreur ou des manques sur la carte, vous pouvez y remédier directement sur OpenStreetMap. Vos modifications seront prises en compte dans les minutes qui suivent leur enregistrement.</p>
+              <p><a href="https://www.openstreetmap.org/login?" role="button" class="btn btn-primary btn-lg btn-block"><i class="fa fa-pencil"></i> <span data-l10n-id="ameliorer_carte_contribuer">Contribuer au projet OpenStreetMap</span></a></p>
+		<div class="alert alert-info">
+		    <h5 data-l10n-id="ameliorer_carte_sstitre">Je veux en savoir plus !</h5>
+		    <p data-l10n-id="ameliorer_carte_p3">Des communautés OpenStreetMap sont présentes dans la majorité des pays et des régions ; vous pouvez rencontrer et rejoindre ces communautés notamment lors d'événement comme une cartopartie (ou mapping party), ou de rassemblements liés au monde du logiciel libre et des données ouvertes.</p>
+		    <p data-l10n-id="ameliorer_carte_p4">En Guadeloupe, les utilisateurs de logiciels libres se regroupent dans l'association <i>GwadaLUG</i> et organisent chaque mois des hackpéros publics et ouverts.</p>
+		    <p><a href="http://www.gwadalug.org">www.gwadalug.org</a></p>
+		</div>
+	      </div>
+	      <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+		</div>
+	    </div>
+	  </div>
+	</div>
+
+
+	<!-- Participer / Pirater - -->
+	<div class="modal fade" id="piraterModal" tabindex="-1" role="dialog" aria-labelledby="piraterModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		<h4 class="modal-title" id="piraterModalLabel"><i class="fa fa-exclamation"></i> Pirater </h4>
+	      </div>
+	      <div class="modal-body">
+		<h5 data-l10n-id="pirater_bienvenue">Bienvenue </h5>
+		<p data-l10n-id="pirater_p1">Tout d'abord, soyez rassurés, il n'y a rien d'illégal ou de dangereux à vous connecter sur une pirate box. PirateBox971 est un réseau social où vous pouvez anonymement discuter et partager des fichiers avec les personnes autour de vous !</p>
+		<img src="img/geektionnerd-13-02-11-PirateBox-1.png" class="img-responsive">
+		<p data-l10n-id="pirater_p2">L'objectif de la pirate box et de ses derivées est de favoriser le partage et la diffusion de données et de documents numériques libres ou dans le domaine public, ainsi que de renforcer le lien social. Il ne s'agit en aucune façon de promouvoir une quelconque pratique de vol, de contrefaçon ou de piraterie ...</p>
+		<blockquote>
+			<p data-l10n-id="pirater_wikipedia_fr">La piraterie désigne une forme de banditisme pratiquée sur mer par des marins appelés pirates. Cependant, les pirates ne se limitent pas seulement aux pillages de navire, et attaquent parfois de petites villes côtières.</p>
+			<footer> <cite title="Wikipedia"><a href="https://fr.wikipedia.org/wiki/Piraterie">Wikipedia</a></cite></footer>
+		</blockquote>
+		<p data-l10n-id="pirater_p3">PirateBox971, c'est un ensemble de réseaux parallèles, spécialement conçus et développés pour le partage de fichier et le chat, volontairement déconnectés de l'Internet pour préserver au maximum votre anonymat.</p>
+		<img src="img/geektionnerd-13-02-11-PirateBox-2.png" class="img-responsive">
+		<p data-l10n-id="pirater_p4">Profitez-en, discutez avec les autres et partagez tous les fichiers et toutes les infos que vous souhaitez ...</p>
+	      </div>
+	      <div class="modal-footer">
+		      <p><small><a data-l10n-id="licence_cc_bysa_20_url" rel="license" href="http://creativecommons.org/licenses/by-sa/2.0/fr/"><img style="border-width: 0pt;" src="img/cc-by-sa.png" alt="Creative Commons License"></a><br>
+                  <span data-l10n-id="pirater_geektionnerd">images Le Geektionnerd par </span><a rel="cc:attributionURL" href="http://geektionnerd.net/">Simon «&nbsp;Gee&nbsp;» Giraudot</a><br> <a data-l10n-id="licence_cc_bysa_20_url" rel="license" href="http://creativecommons.org/licenses/by-sa/2.0/fr/"><span> data-l10n-id=licence CC BY-SA 2.0 FR</a></small></p>.
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+	<!-- Participer / join box - -->
+	<div class="modal fade" id="joinboxModal" tabindex="-1" role="dialog" aria-labelledby="joinboxModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="joinboxModalLabel"><i class="fa fa-wifi"></i> <span data-l10n-id="joinbox_titre">Rejoindre une pirate box</span> </h4>
+	      </div>
+	      <div class="modal-body">
+		<p data-l10n-id="joinbox_p1">Vous pouvez utilisez n'importe quel ordinateur équipé de WiFi ou votre smartphone pour rejoindre une pirate box : se connecter sur son réseau est une opération très simple, le plus difficile étant certainement d'en trouver une !</p>
+		<ol> 
+			<li data-l10n-id="joinbox_step1">Localisez une pirate box grâce à l'application PirateBox971 et rendez-vous à proximité</li>
+			<li data-l10n-id="joinbox_step2" id="hotspots">Listez les points d'accès ouverts disponibles et connectez-vous sur PirateBox971<sup>[<a href="#ssid">1</a>]</sup></li> 
+			<li data-l10n-id="joinbox_step3">Ouvrez votre navigateur.</li>
+		</ol>
+		<p data-l10n-id="et_voila">Et voilà.</p>
+		<p data-l10n-id="joinbox_p2">Vous pouvez maintenant discuter sur le chat ou dans les forums et partager des fichiers avec les autres utilisateurs.</p>
+        <p><b><span data-l10n-id="joinbox_rappel">Rappel</span> :</b> <span>sur la majorité des pirate box, vous pouvez non seulement downloader des fichiers, mais également y uploader vos propres fichiers. Par contre, seul le propriétaire de la box peut y effacer des fichiers.</span></p>
+	      </div>
+	      <div class="modal-footer"> 
+              <p id="ssid"><small>[<a href="#hotspots">1</a>] <span data-l10n-id="joinbox_ssid">La pirate box peut porter un autre nom que "PirateBox971". Vous pouvez afficher le nom des pirates box en cliquant sur l'icone de la box sur la carte.</span></small></p>
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Participer / make box - -->
+	<div class="modal fade" id="makeboxModal" tabindex="-1" role="dialog" aria-labelledby="makeboxModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="makeboxModalLabel"><i class="fa fa-wrench"></i> <span data-l10n-id="makebox_titre">Fabriquer une pirate box</span></h4>
+	      </div>
+	      <div class="modal-body">
+		      <p data-l10n-id="makebox_p1">Sur le plan informatique, une pirate box est un ensemble de services logiciels et réseau. De nombreux périphériques peuvent donc être hackés pour les transformer en pirate box :</p>
+		      <ul>
+                  <li id="tplink"><span data-l10n-id="makebox_l1">routeur TPLINK 3020 / 3040</span><sup>[<a href="#tplink-firmware">1</a>] ;</li>		              
+		      	<li data-l10n-id="makebox_l2">Smarphone ou tablette Android ;</li>
+		      	<li data-l10n-id="makebox_l3">un Raspberry Pi ;</li>
+		      	<li data-l10n-id="makebox_l4">Un ordinateur portable en installation permanente ou sur une clé USB ...</li>
+		      </ul>
+		      <p data-l10n-id="makebox_p2">De nombreuses procédures d'installation et de modifications sont disponibles sur le site du projet original.</p>
+		      <p><a href="http://piratebox.cc/">piratebox.cc</a></p>
+		      <p data-l10n-id="makebox_p3">On trouve également sur internet de nombreux projets dérivés de la PirateBox : ShareBox, BiblioBox, LibraryBox, CowBox, BibleBox ...</p> 
+
+			<div class="alert alert-info">
+			    <h5 data-l10n-id="makebox_sstitre">J'ai besoin d'aide !</h5>
+			    <p data-l10n-id="makebox_p4">Il y a certainement à proximité de chez vous un Groupe d'utilisateurs de logiciels libres ou un hackerspace. Vous devriez y trouver des personnes pour vous guider dans votre démarche.</p>
+			    <p data-l10n-id="makebox_p5">En Guadeloupe, les utilisateurs de logiciels libres se rassemblent dans l'association GwadaLUG et organisent chaque mois des hackpéros publics et ouverts. L'organisation d'atelier pirate box est une activité classique du GwadaLUG.</p>
+			    <p><a href="http://www.gwadalug.org">www.gwadalug.org</a></p>
+			</div>
+	      </div>
+	      <div class="modal-footer"> 
+              <p id="tplink-firmware"><small>[<a href="#tplink">1</a>] <span data-l10n-id="makebox_tplink">Ces 2 routeurs, efficaces et bon marché, figurent au catalogue de certains revendeurs en Guadeloupe. Attention, il semble que certaines versions de firmware du 3040 peuvent poser problème.</span></small></p>
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+	<!-- Participer / join piratebox971 network - -->
+	<div class="modal fade" id="joinnetworkModal" tabindex="-1" role="dialog" aria-labelledby="joinnetworkModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="joinnetworkModalLabel"><i class="fa fa-bullhorn"></i> <span data-l10n-id="join_network_titre">Rejoindre PirateBox971</span></h4>
+	      </div>
+	      <div class="modal-body">
+		      <p data-l10n-id="join_network_p1">Vous avez allumé votre pirate box ou vous vous préparez à le faire ? bravo !</p>
+		      <p data-l10n-id="join_network_p2">Vous êtes aux Antilles ? Alors votre box peut apparaître sur notre carte.</p>
+		      <p data-l10n-id="join_network_p3">Placez-vous à proximité de la box et envoyez nous son nom et votre géolocalisation.</p> 
+
+		      <form role="form" name="addbox" method="post" action="">
+                  <input type="hidden" name="current_lon" value="">
+                  <input type="hidden" name="current_lat" value="">
+  <div class="form-group">
+    <label for="name" data-l10n-id="join_network_lbl1">Nom de la box</label>
+    <input type="text" class="form-control" name="name" id="name" required>
+  </div>
+
+  <div class="form-group">
+    <label for="box"data-l10n-id="join_network_lbl2">Durée approximative d'emission restante </label>
+  	<select name="duration" class="form-control" id="box">
+	<option value="2">2 heures</option>
+	<option value="4" selected >4 heures</option>
+	<option value="8">8 heures</option>
+	<option value="12">12 heures</option>
+	<option value="24">24 heures</option>
+	<option value="48">48 heures</option>
+	<option value="72">72 heures</option>
+	</select>
+	<p class="help-block" data-l10n-id="join_network_hlp2">Une fois cette durée écoulée, la box disparaît de la carte. Aucune donnée n'est stockée.</p>
+  </div>
+  <div class="form-group">
+    <label for="msg" data-l10n-id="join_network_lbl3">Message</label>
+    <textarea class="form-control" rows="3" id="msg" name="msg"></textarea>
+	<p class="help-block" data-l10n-id="join_network_hlp3">Ce message court (100 caractères environ) apparaîtra dans une infobulle lors d'un clic sur l'icône correspondant à la box.</p>
+  </div>
+  <div class="checkbox">
+    <label>
+        <input type="checkbox" name="sharelocation" value="ok" required> <span data-l10n-id="join_network_lbl4">J'ai conscience en utilisant ce formulaire que je vais partager ma géolocalisation actuelle.</span>
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block" id="addbox_button" name="addbox_button"><i class="fa fa-map-marker"></i> <span data-l10n-id="join_network_button">Apparaître sur la carte</span></button>
+</form>
+
+	      </div>
+	      <div class="modal-footer"> 
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+
+	<!-- Aide / Pirate Box -->
+	<div class="modal fade" id="pirateboxModal" tabindex="-1" role="dialog" aria-labelledby="pirateboxModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="pirateboxModalLabel"><i class="fa fa-question"></i> <span data-l10n-id="info_piratebox_titre">Pirate Box</span></h4>
+	      </div>
+	      <div class="modal-body">
+              <p data-l10n-id="info_piratebox_p1">Outil pour la collaboration et le partage de fichiers, la pirate box est un périphérique mobile autonome inspiré par les radio pirates et le mouvement de la culture libre.</p>
+               <p data-l10n-id="info_piratebox_p2">La pirate box utilise exclusivement des logiciels libres et open source pour créer un réseau nomade sans fil permettant à ses utilisateurs de partager anonymement images, vidéos, documents et autres contenus numériques.</p>
+		      <p data-l10n-id="info_piratebox_p3">La "pirate box" est conçue pour être sûre et sécurisée. Aucune inscription n'est requise et aucune donnée utilisateur n'est enregistrée. Le dispositif est volontairement déconnecté de l'Internet afin de protéger la vie privée de ses utilisateurs et les préserver de tout fichage ou flicage.</p>
+	      </div>
+	      <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+		
+	<!-- Aide / Pirate Box 971 -->
+	<div class="modal fade" id="piratebox971Modal" tabindex="-1" role="dialog" aria-labelledby="piratebox971ModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="pirateboxModa971lLabel"><i class="fa fa-question"></i> <span>Pirate Box 971</h4>
+	      </div>
+	      <div class="modal-body">
+              <p data-l10n-id="info_piratebox971_p1">À l'origine, PirateBox971 est une pirate box réalisée en Guadeloupe, lors d'un "atelier cambouis" organisé par le GwadaLUG. Pour trouver Piratebox971, il fallait suivre @piratebox971 sur twitter ou participer à un #hackpéro du GwadaLUG.</p>
+              <blockquote class="blockquote-reverse">
+			<p data-l10n-id="info_piratebox971_quote">Imaginons ensemble le jour prochain où, chaque médiathèque aux Antilles proposera via sa propre bibliobox des versions numériques de livres libres ou du domaine public ainsi que des documents multimédia sous licence type Creative Commons ...</p>
+            <footer> <cite title="follow @piratebox971"><a href="https://twitter.com/piratebox971/">@piratebox971</a></cite></footer>
+		</blockquote>
+		<p data-l10n-id="info_piratebox971_p2">Les objectifs de Piratebox971 étant autant </p> 
+		<ul>
+		  <li data-l10n-id="info_piratebox971_p2_l1">la promotion aux Antilles de la pirate box et ses dérivées comme vecteur de lien social et d'échanges culturels, </li>
+		  <li data-l10n-id="info_piratebox971_p2_l2">le plaisir de la recherche permanente et de l'innovation collectives :</li> 
+	        </ul>  
+		<p data-l10n-id="info_piratebox971_p3">PirateBox971 est devenu un laboratoire d'expérimentation :</p> 
+	        <ol>
+		  <li data-l10n-id="info_piratebox971_p3_l1">projet de création d'un réseau de pirate box et dérivées aux Antilles ;</li>
+		  <li data-l10n-id="info_piratebox971_p3_l2">réalisation d'une application mobile permettant de présenter l'initiative et de géolocaliser des box allumées ;</li>
+          <li data-l10n-id="info_piratebox971_p3_l3"> organisation d'ateliers de hacking et de débats autour des notions et des valeurs du logiciel libre, des biens communs et de la neutralité des réseaux.</li>
+	        </ol>
+            <p data-l10n-id="info_piratebox971_p4">Des projets d'entreprise intégrant des éléments du concept de pirate box sont en cours en Guadeloupe.</p>
+	      </div>
+	      <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Aide / GwadaLUG -->
+	<div class="modal fade" id="gwadalugModal" tabindex="-1" role="dialog" aria-labelledby="gwadalugModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		<h4 class="modal-title" id="gwadalugModalLabel"><i class="fa fa-linux"></i> GwadaLUG</h4>
+	      </div>
+	      <div class="modal-body">
+              <h5><span data-l10n-id="info_gwadalug_titre">GNU/Linux user group de Guadeloupe</span> <small><span data-l10n-id="info_gwadalug_since">depuis 2006</span></small></h5>
+		  <p span data-l10n-id="info_gwadalug_p1">Le GwadaLUG réunit en Guadeloupe des hackers, libristes, makers, entrepreneurs, artistes et autres curieux autour des valeurs du logiciel libre et du hack.</p>
+		  
+		  <blockquote class="blockquote-reverse" id="#credo">
+			  <p><abbr title="Do It Yourself" class="initialism">DIY</abbr>, but <abbr title="Do It With Others" class="initialism">DIWO</abbr><sup>[<a href="#diwo">1</a>]</sup> et, toujours avec des logiciels libres !</p>
+		  </blockquote>
+          <div class="alert alert-info">
+              <h5 data-l10n-id="info_gwadalug_sstitre">Venez au prochain hackpéro du GwadaLUG !</h5>
+              <p class="bg-info" data-l10n-id="info_gwadalug_p2">Les hackpéros sont des rencontres régulières, publiques et ouvertes, permettant à tous de rencontrer des membres du GwadaLUG et d’échanger autour du développement, du hack, du choix d'un logiciel libre, de son utilisation ou de sa configuration. Selon les fois, ces hackpéros peuvent prendre la forme de mini-conférences, démo, hacks ... ou de simples rencontres informelles autour d’un verre.</p>		           
+          </div> 
+		  <p data-l10n-id="info_gwadalug_p3">Le GwadaLUG organise en Guadeloupe : </p>
+          <ul>
+              <li data-l10n-id="info_gwadalug_p3_l1">des hackpéros (2ème mercredi de chaque mois) ;</li>
+              <li data-l10n-id="info_gwadalug_p3_l2"> des ateliers cambouis ;</li>
+              <li data-l10n-id="info_gwadalug_p3_l3">des conférences et workshops ;</li>
+              <li data-l10n-id="info_gwadalug_p3_l4"> des opérations "Hacker Ouvert" ...</li>
+          </ul>
+          <p data-l10n-id="info_gwadalug_p4"> Le "GwadaLUG" participe également à des événements en Guadeloupe et ailleurs : Genève (RMLL 2012), Amsterdam (OHM 2013), Montpellier (RMLL2014) ...</p>
+          <p><a href="http://www.gwadalug.org">www.gwadalug.org</a></p>
+      </div>
+      <div class="modal-footer">
+          <p id="diwo"><small>[<a href="#credo">1</a>] <span data-l10n-id="info_gwadalug_diwo">Nous traduisons DIWO, l'abbréviation de "Do it with others", (Fais le avec d'autres) en "Tout seul, on va plus vite ; ensemble on va plus loin" ou encore "plus on est de fous, plus on rit".</span></small></p>
+
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Aide / FWII -->
+	<div class="modal fade" id="fwiiModal" tabindex="-1" role="dialog" aria-labelledby="fwiiModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		<h4 class="modal-title" id="fwiiModalLabel"><i class="fa fa-globe"></i> FWII.fr</h4>
+	      </div>
+	      <div class="modal-body">
+              <h5><span data-l10n-id="info_fwii_titre">French West Indies Internet</span> <small><span data-l10n-id="info_fwii_sstitre">FAI associatif</small></h5>
+		<p data-l10n-id="info_fwii_p1">FWII.fr est un projet de création en Guadeloupe d’un fournisseur d’accès internet à but non lucratif, fondé sur les valeurs du bénévolat et de la solidarité et fonctionnant démocratiquement sur le mode associatif et participatif, dans l'esprit de la FFDN (Fédération French Data Network), pour contribuer à la construction du réseau aux Antilles ainsi qu’à la défense et la promotion de la neutralité du Net.
+</p>
+		  
+
+        <div class="alert alert-info">
+		<p data-l10n-id="info_fwii_p2">Le projet "FWII.fr" est le concrétisation des travaux du groupe de travail "Internet et (Très ?) Haut Débit" du GwadaLUG.</p>
+
+	    <p data-l10n-id="info_fwii_p3">C’est pour ses dimensions citoyennes de savoir partagé, d’expérimentations et de décisions communes avec des actions concrètes réalisées de manière autonome par des personnes regroupées par leur intérêt commun pour les problématiques de réseau en Guadeloupe et les enjeux de l’internet en général que l’ensemble des adhérents du GwadaLUG soutiennent le projet de FAI associatif "FWII.fr".
+    </div>
+		<p><a href="http://fwii.fr">FWII.fr</a></p>
+	      </div>
+	      <div class="modal-footer">
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+<!-- About / privacy - -->
+	<div class="modal fade" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="privacyModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="privacyModalLabel"><i class="fa fa-eye"></i> <span data-l10n-id="about_privacy_titre">Règles de confidentialité</span> </h4>
+	      </div>
+	      <div class="modal-body">
+		<p data-l10n-id="abbout_privacy_p1">Le droit à la vie privée et son respect sont des choses importantes pour nous. Nous ne collectons ni ne stockons aucune donnée personnelle ni information concernant les utilisateurs de l'application PirateBox971 ou les propriétaires de pirate box.</p>
+        <div class="alert alert-info">
+        <h5 data-l10n-id="about_privacy_sstitre1">Ce que vous devez savoir</h5>
+        <h6 data-l10n-id="abbout_privacy_sstitre1_1">si vous consultez la carte PirateBox971 :</h6>
+        <p data-l10n-id="abbout_privacy_p3">L'application se connecte sur le serveur PirateBox971 pour y récupérer la liste des box allumées. Votre géolocalisation  n'est pas communiquée au serveur, elle est seulement utilisée par l'application PirateBox971 pour vous placer sur la carte affichée.</p>
+        <h6 data-l10n-id="abbout_privacy_sstitre1_2">si vous ajoutez une box sur la carte PirateBox971 :</h6>
+        <p data-l10n-id="abbout_privacy_p4"> Les seules informations temporairement enregistrées sont celles que vous fournissez volontairement via le fomulaire : nom de la box, message, géolocalisation et durée d'émission restante.</p>
+        <p data-l10n-id="abbout_privacy_p5"> Passé le délai que vous avez indiqué, les informations n'apparaissent plus sur la carte. Ces informations sont régulièrement effacées et la base de donnée réinitialisée.</p>
+        </div>
+	    <div class="alert alert-warning">
+		    <h5 data-l10n-id="ameliorer_carte_sstitre">Je veux en savoir plus !</h5>
+            <p id="server"><span data-l10n-id="about_privacy_warning"> Le serveur PirateBox971 n'utilise aucun système de tracking ni d'outil type Web Analytics. L'application PirateBox971 intègre toutes les librairies nécessaires à son fonctionnement pour ne pas exposer ses utilisateurs à des risques de collectes de données personnelles par des tiers. Aucune ressource extérieure n'est utilisée, sauf pour les données cartographiques pour lesquelles, en plus d'utiliser les données d'openstreetmap.org, nous utilisons le serveur de carreaux de rendu cartographiques osm.org. Sachez cependant que votre adresse IP ou votre connection sur notre serveur sont certainement enregistrées par les opérateurs comme l'hébergeur du serveur ou votre fournisseur d'accès internet, ainsi que par différents intermédiaires. Il est prévu de passer le service PirateBox971 en https.</span><sup>[<a href="#hosting">1</a>]</sup></p>
+		</div>
+        <p data-l10n-id="about_privacy_hosting"> Si nous devions changer cette politique, nous vous en préviendrions.</p>
+	      </div>
+	      <div class="modal-footer"> 
+              <p id="hosting"><small>[<a href="#server">1</a>] <span data-l10n-id="about-privacy-hosting">Le service PirateBox971 est hébergé sur un serveur privé virtuel administré par des membres du GwadaLUG. Le service PirateBox971 est administré sur ce serveur par le développeur de l'application.</span></small></p>
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- About / licences - -->
+	<div class="modal fade" id="licencesModal" tabindex="-1" role="dialog" aria-labelledby="licencesModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="licencesModalLabel"><i class="fa fa-legal"></i> <span data-l10n-id="about_licenses_titre">Licences</span> </h4>
+	      </div>
+	      <div class="modal-body">
+              <h5>OpenStreetMap</h5>
+              <p data-l10n-id="about_license_osm_0">L'application PirateBox971 utilise les données cartographiques d'OpenStreetMap.</p>
+              <p><span data-l10n-id="about_license_osm_1">OpenStreetMap est un ensemble de données ouvertes, disponibles sous la licence</span> <a href="http://opendatacommons.org/licenses/odbl/">Open Data Commons Open Database License</a> (ODbL)</p>
+              <p><span data-l10n-id="about_license_osm_2">Les carreaux de rendu cartographiques, ainsi que la documentation, sont disponibles sous la licence<span> <a href="https://creativecommons.org/licenses/by-sa/2.0" data-l10n-id="about_license_osm_cc">Creative Commons paternité – partage à l’identique 2.0</a> (CC-BY-SA)</p>
+              <h5>PirateBox971</h5>
+              
+              <p id="gplv3"><span data-l10n-id="about_licence_gpl">Ce programme est diffusé selon les termes de la licence GPL version 3 ou ultérieure.</span> <sup>[<a href="#gpl_all">1</a>]</sup></p>
+          <div class="alert alert-info">
+              <p>Copyright (C) 2014 Olivier WATTE, Andy ZEBUS</p>
+              
+              <p>PirateBox971 is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or any later version.</p>
+
+              <p>PirateBox971 is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
+
+              <p>You should have received a copy of the GNU General Public License along with PirateBox971. If not, see www.gnu.org/licenses.</p>
+      </div>
+	      <div class="modal-footer"> 
+              <p id="gpl_all"><small>[<a href="#gplv3">1</a>] <span data-l10n-id="about_licence_footer">La PirateBox971, l'application Android PirateBox971 et le serveur PirateBox971 sont tous les 3 diffusés sous les termes de la license GPL v3 ou ultérieure et les sources sont disponibles sur le compte github de l'auteur.</span></small></p>
+              <p><small><span data-l10n-id="about_licence_code">Développement</span> : <a href="https://twitter.com/owatte">Olivier WATTE</a></small></p>
+              <p><small><span data-l10n-id="about_licence_translation">Traduction</span> : Andy ZEBUS</small></p>
+		<button type="button" class="btn btn-default" data-dismiss="modal" data-l10n-id="button_close">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+    </body>
+</html> 
